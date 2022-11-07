@@ -1,7 +1,7 @@
 package com.joango.spring.data.access.service;
 
 import com.joango.spring.data.access.dao.EventDAO;
-import com.joango.spring.data.access.errors.EventError;
+import com.joango.spring.data.access.exceptions.eventExceptions.EventNotFoundException;
 import com.joango.spring.data.access.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,12 +22,12 @@ public class EventService {
     }
 
     @Transactional(readOnly = true)
-    public Event findById(String id) throws Throwable {
+    public Event findById(String id) throws EventNotFoundException {
         Optional<Event> event = eventDAO.findById(id);
         if(event.isPresent()){
             return event.get();
         } else {
-            throw new EventError("Event with id: " + id + "does not exist");
+            throw new EventNotFoundException("Event with id: " + id + " does not exist");
         }
     }
 

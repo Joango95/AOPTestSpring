@@ -1,17 +1,28 @@
 package com.joango.spring.data.access.model;
 
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+
 public class Ticket {
 
+    @Id
+    @GeneratedValue
     private String id;
+    @Column(name="eventId")
     private String eventId;
-    private String locationId;
-    private Integer price;
+    @Column(name="userId")
+    private String userId;
+    @Column(name="seatNumber")
+    private Integer seatNumber;
 
-    public Ticket(String id, String eventId, String locationId, Integer price) {
-        this.id = id;
+    public Ticket(
+        String eventId,
+        String userId
+    ) {
         this.eventId = eventId;
-        this.locationId = locationId;
-        this.price = price;
+        this.userId = userId;
     }
 
     public String getEventId() {
@@ -22,11 +33,11 @@ public class Ticket {
         return id;
     }
 
-    public String getLocationId() {
-        return locationId;
+    public String getUserId() {
+        return userId;
     }
 
-    public Integer getPrice() {
-        return price;
+    public Integer getSeatNumber() {
+        return seatNumber;
     }
 }

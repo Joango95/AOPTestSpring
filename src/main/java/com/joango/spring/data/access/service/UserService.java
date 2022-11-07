@@ -1,9 +1,7 @@
 package com.joango.spring.data.access.service;
 
 import com.joango.spring.data.access.dao.UserDAO;
-import com.joango.spring.data.access.errors.EventError;
-import com.joango.spring.data.access.errors.UserError;
-import com.joango.spring.data.access.model.Event;
+import com.joango.spring.data.access.exceptions.userExceptions.UserNotFoundException;
 import com.joango.spring.data.access.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,12 +21,12 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User findById(String id) throws Throwable {
+    public User findById(String id) throws UserNotFoundException {
         Optional<User> user = userDAO.findById(id);
         if(user.isPresent()){
             return user.get();
         } else {
-            throw new UserError("User with id: " + id + "does not exist");
+            throw new UserNotFoundException("User with id: " + id + " does not exist");
         }
     }
 
@@ -36,4 +34,6 @@ public class UserService {
     public User findByName(String name){
         return userDAO.findByName(name);
     }
+
+
 }
